@@ -3,11 +3,15 @@ package com.example.userservice;
 import org.springframework.boot.context.properties.bind.Name;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 public class User {
 
     private long id;
+
+    @NotNull(message = "Please provide a name")
     private String name;
+
     @Email
     private String mail;
 

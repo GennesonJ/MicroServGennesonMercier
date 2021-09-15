@@ -2,6 +2,7 @@ package com.example.userservice;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class UserController {
 	}
 
 	@PostMapping("/users")
-	public User create_user(@RequestBody User user){
+	public User create_user(@RequestBody @Valid User user){
 		long new_id = counter.incrementAndGet();
 		user.setId(new_id);
 		users.put(new_id,user);
@@ -35,12 +36,14 @@ public class UserController {
 
 	@DeleteMapping("/users/{id}")
 	public String delete_user(@PathVariable(value = "id") Long id) {
+		if(!users.containsKey(id)) throw new UserNotFoundException(id);
 		users.remove(id);
 		return "L'utilisateur " + id + " a été supprimé";
 	}
 
 	@PutMapping("/users/{id}")
 	public User modify_user (@PathVariable(value = "id") Long id, @RequestBody User user){
+		if(!users.containsKey(id)) throw new UserNotFoundException(id);
 		user.setId(id);
 		users.replace(id, user);
 		return user;
