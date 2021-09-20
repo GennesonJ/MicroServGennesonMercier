@@ -1,0 +1,113 @@
+openapi : 3.0.1
+info:
+  title: User service
+  description: 'This is our User service'
+  contact:
+    email: jeremygenneson@hotmail.fr
+  version: 1.0.0
+servers:
+- url: 'http://localhost/8080'
+tags:
+- name: user
+paths:
+  /users:
+    get:
+      tags:
+      - user
+      summary: Get a list of all user
+      responses:
+        200:
+          description: a list of user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      tags:
+      - user
+      summary: Add a new user
+      requestBody:
+        description: The user object, might omit the Id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        405:
+          description: Invalid user
+          content: {}
+  /users/{userId}:
+    get:
+      tags:
+      - user
+      summary: Find user by Id
+      description: Returns a single user
+      parameters:
+        - name: userId
+          in: path
+          description: Id of user to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: succesful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: User not found
+          content: {}
+    delete:
+      tags:
+      - user
+      summary: Delete user by Id
+      description: Delete a single user
+      parameters:
+      - name: userId
+        in: path
+        description: Id of user to delete
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:       
+        200:
+          description: succesful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: User not found
+          content: {}
+    
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        email:
+          type: string
+      required:
+        - name 
+        - description
+        - email
+      example:
+        id: 5
+        name: "Michael"
+        description: "First user"
+        email: "test@example.com"
+    
