@@ -18,10 +18,6 @@ public class NewUser {
         return id;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setId(long id) {
         this.id = id;
     }

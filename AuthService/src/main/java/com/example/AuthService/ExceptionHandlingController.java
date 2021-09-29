@@ -43,4 +43,11 @@ public class ExceptionHandlingController {
         return ex.getMessage();
     }
 
+    @ResponseBody
+    @ExceptionHandler(TokenNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String tokenNotValidException(TokenNotValidException ex){
+        return ex.getMessage();
+    }
+
 }
