@@ -37,7 +37,7 @@ paths:
         200:
           description: L'id de l'user nouvellement créé
           content:
-            application/json:
+            text/plain:
               schema:
                 type: integer
                 format: int64
@@ -158,6 +158,14 @@ paths:
           type: integer
           format: int64
       responses:
+        200:
+          description: Le nouveau token
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "ABC2123"
+            
         401:
           description: Le mot de passe n'est pas correct.
         404:
