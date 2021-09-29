@@ -7,5 +7,5 @@ public class Token {
     public String token;
     public String id;
 
-    
+
 }

@@ -29,4 +29,11 @@ public class NewUser {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean checkpassword(String password){
+        if(this.password.equals(password))
+            return true;
+        else
+            return false;
+    }
 }

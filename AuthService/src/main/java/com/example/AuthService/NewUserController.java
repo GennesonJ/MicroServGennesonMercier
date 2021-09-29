@@ -36,7 +36,8 @@ public class NewUserController {
 
 	@DeleteMapping("/users/{id}")
 	public String delete_user(@PathVariable(value = "id") Long id) {
-		if(!users.containsKey(id)) throw new NewUserNotFoundException(id);
+		if(!users.containsKey(id))
+			throw new NewUserNotFoundException(id);
 		users.remove(id);
 		return "L'utilisateur " + id + " a été supprimé";
 	}
@@ -48,6 +49,17 @@ public class NewUserController {
 		users.replace(id, user);
 		return user;
 	}
+
+//	@PostMapping("/users/{id}/token")
+//	public Token connexion_user(@PathVariable(value = "id") Long id, @RequestBody String password){
+//		if(users.containsKey(id))
+//			throw new NewUserNotFoundException(id);
+//		if(users.get(id).checkpassword(password))
+//			throw new NewUserNotFoundException(id);
+//
+//		token = new Token();
+//		return token;
+//	}
 
 
 }
