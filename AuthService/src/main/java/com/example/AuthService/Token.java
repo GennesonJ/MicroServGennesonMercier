@@ -12,6 +12,11 @@ public class Token {
 
     final char[] allowedChars = "ABCDEFGHIJKLMOPQRSTUVWXYZ0123456789".toCharArray();
 
+    public Token(Long id) {
+        this.userId=id;
+        this.token=generateToken();
+    }
+
 
     public String getToken() {
         return token;

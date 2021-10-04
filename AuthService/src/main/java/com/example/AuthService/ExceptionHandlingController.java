@@ -50,4 +50,11 @@ public class ExceptionHandlingController {
         return ex.getMessage();
     }
 
+    @ResponseBody
+    @ExceptionHandler(PasswordIncorrectExeption.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String passwordIncorrectExeption(PasswordIncorrectExeption ex){
+        return ex.getMessage();
+    }
+
 }

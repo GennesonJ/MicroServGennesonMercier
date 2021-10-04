@@ -3,7 +3,6 @@ package com.example.AuthService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.http.HttpHeaders;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +42,7 @@ public class NewUserController {
 	}
 
 	@DeleteMapping("/users/{id}")
-	public void delete_user (@PathVariable(value = "id") Long id, Token token){
+	public void delete_user (@PathVariable(value = "id") Long id, String token){
 		if(!tokens.containsKey(token))
 			throw new TokenNotValidException(token);
 		Token t = tokens.get(token);
@@ -60,31 +59,47 @@ public class NewUserController {
 	}
 
 
-	@PostMapping("/users/{id}/{password}")
-	public NewUser modify_password(@PathVariable(value = "id") Long id, @RequestBody NewUser user){
+	@PostMapping("/users/{id}/password")
+	public long modify_password(@PathVariable(value = "id") Long id, @RequestHeader(value = "X-Token") String token, @RequestBody String newPassword){
 
-		return user;
+		if (!tokens.containsKey(token))
+			throw new TokenNotValidException(token);
+		Token t = tokens.get(token);
+		if (t.getUserId()!=id)
+			throw new TokenNotValidException(token);
+		if(!users.containsKey(id))
+			throw new NewUserNotFoundException(id);
+		NewUser user = users.get(id);
+		user.setPassword(newPassword);
+		return id;
 	}
 
 
 	@PostMapping("/users/{id}/token")
-	public String connexion_user(@PathVariable(value = "id") Long id, @RequestBody String password){
-		if(users.containsKey(id))
+	public String connexion_user(@PathVariable(value = "id") Long id, @RequestBody String password) throws PasswordIncorrectExeption {
+		if(!users.containsKey(id))
 			throw new NewUserNotFoundException(id);
-		if(users.get(id).checkpassword(password))
-			throw new NewUserNotFoundException(id);
+		if(!users.get(id).checkpassword(password))
+			throw new PasswordIncorrectExeption(id);
 
-		return "";
+		Token token = new Token(id);
+		this.tokens.put(token.getToken(), token);
+
+		return token.getToken();
 	}
 
 	@DeleteMapping("/users/{id}/token")
-	public String deconnexion_user(@PathVariable(value = "id") Long id, @RequestBody String password){
-		if(users.containsKey(id))
+	public void deconnexion_user(@PathVariable(value = "id") Long id, @RequestHeader(value = "X-Token") String token ){
+		if (!users.containsKey(id))
 			throw new NewUserNotFoundException(id);
-		if(users.get(id).checkpassword(password))
-			throw new NewUserNotFoundException(id);
-
-		return "";
+		if (!tokens.containsKey(token))
+			throw new TokenNotValidException(token);
+		Token t = tokens.get(token);
+		if (t.getUserId() != id)
+			throw new TokenNotValidException(token);
+		if (!t.isValid()){
+			throw new TokenNotValidException(token);
+		}
+		this.tokens.remove(token);
 	}
-
 }

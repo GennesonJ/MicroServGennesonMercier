@@ -47,7 +47,7 @@ public class UserController {
 	public String get_user_name(@PathVariable(value = "id")Long id){return users.get(id).getName();}
 
 
-								@PostMapping(path = "/users/{id}/name")
+	@PostMapping(path = "/users/{id}/name")
 	public String set_user_name(@RequestBody String name,
 								@PathVariable(value = "id") Long id,
 								@RequestHeader(value = "X-Token")String token){
