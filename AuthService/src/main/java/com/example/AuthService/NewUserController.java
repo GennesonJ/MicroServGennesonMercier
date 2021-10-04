@@ -19,13 +19,13 @@ public class NewUserController {
 
 
 	@PostMapping("/users")
-	public NewUser create_user(@RequestBody @Valid NewUser user){
+	public Long create_user(@RequestBody @Valid NewUser user){
 		//vérifier si le Id est déjà utilisé
 		if(users.containsKey(user.getId()))
 			throw new NewUserNotValidException(user.getId());
 		user.setId(user.getId());
 		users.put(user.getId(),user);
-		return user;
+		return user.getId();
 	}
 
 	@GetMapping("/users/{id}")
