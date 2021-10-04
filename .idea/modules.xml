@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AuthService/AuthService.iml" filepath="$PROJECT_DIR$/AuthService/AuthService.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/MicroServGennesonMercier.iml" filepath="$PROJECT_DIR$/.idea/MicroServGennesonMercier.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user/user.iml" filepath="$PROJECT_DIR$/user/user.iml" />
     </modules>
   </component>
 </project>

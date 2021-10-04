@@ -77,7 +77,7 @@ public class NewUserController {
 		return "";
 	}
 
-	@PostMapping("/users/{id}/token")
+	@DeleteMapping("/users/{id}/token")
 	public String deconnexion_user(@PathVariable(value = "id") Long id, @RequestBody String password){
 		if(users.containsKey(id))
 			throw new NewUserNotFoundException(id);

@@ -4,9 +4,10 @@ import javax.validation.constraints.NotNull;
 
 public class NewUser {
 
+    @NotNull(message = "Id required.")
     private long id;
 
-    @NotNull
+    @NotNull(message = "Password required.")
     private String password;
 
     public NewUser(long id, String password) {
@@ -24,6 +25,10 @@ public class NewUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public boolean checkpassword(String password){
